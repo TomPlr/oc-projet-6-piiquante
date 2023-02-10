@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt');
 const PasswordValidator = require('password-validator');
 const EmailValidator = require('email-validator');
 const jwt = require('jsonwebtoken');
-const { options } = require('../routes/sauce');
 
 let passwordSchema = new PasswordValidator();
 
@@ -22,12 +21,9 @@ passwordSchema
 
 exports.signup = (req, res) => {
   if (!EmailValidator.validate(req.body.email)) {
-    console.log(EmailValidator.validate(req.body.email));
-    return res.status(400).json(new Error());
+    return res.status(400).json({ message: 'Email incorrect !' });
   } else if (!passwordSchema.validate(req.body.password)) {
-    console.log(passwordSchema.validate(req.body.password, { details: true }));
-
-    return res.status(400).json(new Error('Test'));
+    return res.status(400).json(new Error('Mot de passe incorrect'));
   } else {
     bcrypt
       .hash(req.body.password, 10)

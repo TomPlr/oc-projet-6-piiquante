@@ -11,7 +11,10 @@ const sauceRoutes = require('./routes/sauce');
 mongoose
   .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Successful connection to MongoDB ✅'))
-  .catch((error) => console.log('Connection to MongoDB failed ❌ => ' + error));
+  .catch((error) => {
+    console.log('Connection to MongoDB failed ❌ => ' + error);
+    process.exit(1);
+  });
 
 const app = express();
 
